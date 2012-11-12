@@ -24,17 +24,16 @@ def normalize(path):
     '''Returns a normalized filepath string.'''
     if len(path) == 0:
         return path
-    if path[0] == '/': # this path is absolute
+
+    # check whether path is relative or absolute
+    if path[0] == '/': 
         prefix = '/'
         path = path[1:]
-    else: # this path is relative
+    else: 
         prefix = '' 
         
-    dirs = _build_path_list(path, '/') # holds directories on the path
-    if dirs == None:
-        return path
-    else:
-        return prefix + str.join('/', dirs)
+    dirs = _build_path_list(path, '/') 
+    return prefix + str.join('/', dirs)
 
 def _test():
     '''Run a test suite for this module.'''
@@ -57,8 +56,9 @@ def _test():
 
     print('All tests have passed.')
 
-if __name__ == '__main__':
-    # poll for input until EOF and apply normalize
+def run():
+    '''Polls standard input and writes normalized file paths to standard output
+    until reaching EOF.'''
     try:
         line = input()
         while True:
@@ -68,3 +68,7 @@ if __name__ == '__main__':
             line = input()
     except EOFError:
         pass
+
+if __name__ == '__main__':
+    run()
+
